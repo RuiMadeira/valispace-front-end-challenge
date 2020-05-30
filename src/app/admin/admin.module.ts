@@ -6,10 +6,23 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule }  from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
+import { MatButtonModule } from '@angular/material/button';
+import {MatCardModule} from '@angular/material/card';
+import { FormsModule } from '@angular/forms';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
   imports: [
-    CommonModule, MatInputModule, MatFormFieldModule, MatPaginatorModule, MatSortModule, MatTableModule,
+    CommonModule, 
+    MatInputModule, 
+    MatFormFieldModule, 
+    MatPaginatorModule,
+    MatSortModule,
+    MatTableModule,
+    MatButtonModule,
+    MatCardModule,
+    FormsModule,
+    MatIconModule,
   ],
   declarations: [AdminPageComponent]
 })

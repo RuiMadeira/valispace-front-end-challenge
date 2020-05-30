@@ -1,6 +1,10 @@
+.admin-page {
+    margin: 20px;
+}
+
 table {
     width: 100%;
-  }
+}
 
 .mat-form-field {
     font-size: 14px;
@@ -9,4 +13,13 @@ table {
 
 td, th {
     width: 25%;
+}
+
+.manage-employee-buttons {
+    display: flex;
+    flex-direction: row;
+}
+
+.manage-employee-button {
+    margin: 2px;
 }
