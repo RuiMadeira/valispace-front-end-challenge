@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { EmployeeRole } from '../../models/employee-role.enum';
 import { Employee } from 'src/app/models/employee';
 
 const EMPLOYEE_CURRENT_ID_KEY = 'employeeCurrentId';
@@ -19,7 +18,11 @@ export class ManageEmployeeService {
     return JSON.parse(localStorage.getItem(EMPLOYEE_LIST_KEY)) ?? [];
   }
 
-  public createEmployee(this: ManageEmployeeService, employeeCreated): boolean {
+  public checkPhoneAvailability(phone: number): boolean {
+    return !this.getEmployeeList().some((employee) => employee.phone === phone);
+  }
+
+  public createEmployee(this: ManageEmployeeService, employeeCreated: Employee): boolean {
     const id = this.getCurrentEmployeeId() + 1;
     const currentEmployeeList = this.getEmployeeList();
     const newEmployee = { ...employeeCreated, id };
@@ -35,7 +38,7 @@ export class ManageEmployeeService {
   }
 
   public deleteEmployee(this: ManageEmployeeService, employeeDeleted: Employee): boolean {
-    const newEmployeeList = this.getEmployeeList().filter((employee) => employee.id !== employeeDeleted.id)
+    const newEmployeeList = this.getEmployeeList().filter((employee) => employee.id !== employeeDeleted.id);
     localStorage.setItem(EMPLOYEE_LIST_KEY, JSON.stringify(newEmployeeList));
     return true;
   }

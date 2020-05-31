@@ -4,18 +4,19 @@ import { AdminPageComponent } from './admin-page/admin-page.component';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatPaginatorModule } from '@angular/material/paginator';
-import { MatSortModule }  from '@angular/material/sort';
+import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
-import {MatCardModule} from '@angular/material/card';
+import { MatCardModule } from '@angular/material/card';
 import { FormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
+import { MatSelectModule } from '@angular/material/select';
 
 @NgModule({
   imports: [
-    CommonModule, 
+    CommonModule,
     MatInputModule,
-    MatFormFieldModule, 
+    MatFormFieldModule,
     MatPaginatorModule,
     MatSortModule,
     MatTableModule,
@@ -23,6 +24,7 @@ import { MatIconModule } from '@angular/material/icon';
     MatCardModule,
     FormsModule,
     MatIconModule,
+    MatSelectModule,
   ],
   declarations: [AdminPageComponent]
 })

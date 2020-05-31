@@ -1,7 +1,7 @@
 export interface Post {
-    id: Number,
-    employeeId: Number,
-    text: String,
-    created: Date,
-    edited: Date,
+    id: number;
+    employeeId: number;
+    text: string;
+    created: Date;
+    edited: Date;
 }

@@ -17,9 +17,18 @@ td, th {
     width: 20%;
 }
 
+.employee-form {
+    margin: 10px 5px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    column-gap: 50px;
+}
+
 .manage-employee-buttons {
     display: flex;
     flex-direction: row;
+    justify-content: flex-end;
 }
 
 .manage-employee-button {
