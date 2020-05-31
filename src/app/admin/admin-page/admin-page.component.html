@@ -1,84 +1,98 @@
-<div class="admin-page">
-  <button mat-fab color="primary" aria-label="Add new employee button">
-    <mat-icon>add</mat-icon>
-  </button>
+<div class="employeeSelected ? admin-page-selected : admin-page">
 
   <mat-card *ngIf="employeeSelected" class="employee-card">
     <mat-card-header>
-      <div mat-card-avatar class="example-header-image"></div>
-      <mat-card-title>Shiba Inu</mat-card-title>
-      <mat-card-subtitle>Dog Breed</mat-card-subtitle>
+      <mat-card-title *ngIf="employeeSelected.id">Editing {{employeeSelected.username}}</mat-card-title>
+      <mat-card-title *ngIf="!employeeSelected.id">Addinging new employee</mat-card-title>
     </mat-card-header>
-    <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
-    <mat-card-content>
-      <p>
-        The Shiba Inu is the smallest of the six original and distinct spitz breeds of dog from Japan.
-        A small, agile dog that copes very well with mountainous terrain, the Shiba Inu was originally
-        bred for hunting.
-      </p>
-    </mat-card-content>
-    <mat-card-actions>
-      <button mat-button>LIKE</button>
-      <button mat-button>SHARE</button>
-    </mat-card-actions>
-    
+
     <mat-form-field class="example-form-field">
-      <mat-label>Clearable input</mat-label>
+      <mat-label>Name</mat-label>
       <input matInput type="text" [ngModel]="employeeSelected?.name" (ngModelChange)="employeeSelected ? employeeSelected.name = $event : null">
       <button mat-button *ngIf="employeeSelected?.name" matSuffix mat-icon-button aria-label="Clear" (click)="employeeSelected.name=''">
         <mat-icon>close</mat-icon>
       </button>
     </mat-form-field>
+
+    <ng-container *ngIf="employeeSelected.id">
+      <button mat-raised-button class="manage-employee-button" color="primary" (click)="this.editEmployee()">Confirm Edit</button>
+      <button mat-raised-button class="manage-employee-button" color="warn" (click)="this.editEmployee()">Cancel</button>
+      <button mat-raised-button class="manage-employee-button" color="warn">Delete Employee</button>
+    </ng-container>
+
+    <ng-container *ngIf="!employeeSelected.id">
+      <button mat-raised-button class="manage-employee-button" color="primary" (click)="this.addEmployee()">Add Employee</button>
+      <button mat-raised-button class="manage-employee-button" color="warn">Cancel</button>
+    </ng-container>
   </mat-card>
 
-  <mat-form-field>
-    <mat-label>Filter</mat-label>
-    <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Mia">
-  </mat-form-field>
-  
-  <div class="mat-elevation-z8">
-    <table mat-table [dataSource]="dataSource" matSort>
-  
-      <!-- ID Column -->
-      <ng-container matColumnDef="id">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
-        <td mat-cell *matCellDef="let row"> {{row.id}} </td>
-      </ng-container>
-  
-      <!-- Progress Column -->
-      <ng-container matColumnDef="progress">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Progress </th>
-        <td mat-cell *matCellDef="let row"> {{row.progress}}% </td>
-      </ng-container>
-  
-      <!-- Name Column -->
-      <ng-container matColumnDef="name">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
-        <td mat-cell *matCellDef="let row"> {{row.name}} </td>
-      </ng-container>
-  
-      <!-- Color Column -->
-      <ng-container matColumnDef="color">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Color </th>
-        <td mat-cell *matCellDef="let row" [style.color]="row.color"> {{row.color}} </td>
-      </ng-container>
-  
-      <!-- Manage Column -->
-      <ng-container matColumnDef="manage">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Manage </th>
-        <td mat-cell *matCellDef="let row">
-          <div class="manage-employee-buttons" >
-            <button class="manage-employee-button" mat-raised-button color="primary">Edit</button>
-            <button class="manage-employee-button" mat-raised-button color="warn">Delete</button>
-          </div>
-        </td>
-      </ng-container>
-  
-      <tr mat-header-row sticky *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;">
-      </tr>
-    </table>
-  
-    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+  <div>
+    <h1>Employee List</h1>
+
+    <mat-form-field>
+      <mat-label>Filter</mat-label>
+      <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Mia">
+    </mat-form-field>
+    
+    <div class="mat-elevation-z8">
+      <table mat-table [dataSource]="dataSource" matSort>
+    
+        <!-- ID Column -->
+        <ng-container matColumnDef="id">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
+          <td mat-cell *matCellDef="let row"> {{row.id}} </td>
+        </ng-container>
+    
+        <!-- Progress Column -->
+        <ng-container matColumnDef="username">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Username </th>
+          <td mat-cell *matCellDef="let row"> {{row.username}} </td>
+        </ng-container>
+    
+        <!-- Name Column -->
+        <ng-container matColumnDef="phone">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Phone </th>
+          <td mat-cell *matCellDef="let row"> {{row.phone}} </td>
+        </ng-container>
+    
+        <!-- Color Column -->
+        <ng-container matColumnDef="role">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Role </th>
+          <td mat-cell *matCellDef="let row"> {{row.role}} </td>
+        </ng-container>
+
+        <!-- Color Column -->
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+          <td mat-cell *matCellDef="let row"> {{row.name}} </td>
+        </ng-container>
+    
+        <!-- Manage Column -->
+        <ng-container matColumnDef="manage">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Manage </th>
+          <td mat-cell *matCellDef="let row">
+            <div class="manage-employee-buttons" >
+              <button class="manage-employee-button" mat-raised-button color="primary" (click)="this.selectEmployee(row)">Edit</button>
+              <button class="manage-employee-button" mat-raised-button color="warn">Delete</button>
+            </div>
+          </td>
+        </ng-container>
+    
+        <tr mat-header-row sticky *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;">
+        </tr>
+      </table>
+    
+      <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+    </div>
+  </div>
+
+  <div class="add-employee">
+    <button mat-fab color="primary" aria-label="Add new employee button">
+      <mat-icon>add</mat-icon>
+    </button>
+    <div class="add-employee-button-text">
+        <h2>Add a new employee</h2>
+    </div>
   </div>
 </div>

@@ -19,10 +19,10 @@ export class ManageEmployeeService {
     return JSON.parse(localStorage.getItem(EMPLOYEE_LIST_KEY)) ?? [];
   }
 
-  public createEmployee(this: ManageEmployeeService, username: string, phone: number, role: EmployeeRole, name: String): boolean {
+  public createEmployee(this: ManageEmployeeService, employeeCreated): boolean {
     const id = this.getCurrentEmployeeId() + 1;
     const currentEmployeeList = this.getEmployeeList();
-    const newEmployee = { id, username, phone, role, name }
+    const newEmployee = { ...employeeCreated, id };
     localStorage.setItem(EMPLOYEE_CURRENT_ID_KEY, id.toString());
     localStorage.setItem(EMPLOYEE_LIST_KEY, JSON.stringify(currentEmployeeList.concat(newEmployee)));
     return true;

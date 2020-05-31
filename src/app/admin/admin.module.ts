@@ -14,7 +14,7 @@ import { MatIconModule } from '@angular/material/icon';
 @NgModule({
   imports: [
     CommonModule, 
-    MatInputModule, 
+    MatInputModule,
     MatFormFieldModule, 
     MatPaginatorModule,
     MatSortModule,
