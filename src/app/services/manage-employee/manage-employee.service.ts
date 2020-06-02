@@ -32,7 +32,7 @@ export class ManageEmployeeService {
   }
 
   public editEmployee(this: ManageEmployeeService, employeeEdited: Employee): boolean {
-    const newEmployeeList = this.getEmployeeList().map((employee) => employee.id === employeeEdited.id ? employeeEdited : employee);
+    const newEmployeeList = this.getEmployeeList().map((employee) => employee.id === employeeEdited.id ? { ...employeeEdited } : employee);
     localStorage.setItem(EMPLOYEE_LIST_KEY, JSON.stringify(newEmployeeList));
     return true;
   }

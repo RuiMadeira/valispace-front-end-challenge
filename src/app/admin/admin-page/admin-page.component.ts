@@ -54,6 +54,10 @@ export class AdminPageComponent implements OnInit {
     this.employeeSelected = { ...employee };
   }
 
+  public newEmployee(): void {
+    this.employeeSelected = { id: undefined, username: undefined, phone: undefined, role: undefined, name: undefined };
+  }
+
   public addEmployee(): void {
     this.manageEmployeeService.createEmployee(this.employeeSelected);
   }
@@ -64,6 +68,11 @@ export class AdminPageComponent implements OnInit {
 
   public deleteEmployee(employee: Employee): void {
     this.manageEmployeeService.editEmployee(employee);
+    this.employeeSelected = undefined;
+  }
+
+  public cancelEditing(): void {
+    this.employeeSelected = undefined;
   }
 
   public clearPhone(): void {

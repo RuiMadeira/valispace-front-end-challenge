@@ -12,6 +12,8 @@ import { FormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
 
+import { EmployeeUsernamePatternDirective } from './../validations/EmployeeUserNamePattern.directive';
+
 @NgModule({
   imports: [
     CommonModule,
@@ -26,6 +28,9 @@ import { MatSelectModule } from '@angular/material/select';
     MatIconModule,
     MatSelectModule,
   ],
-  declarations: [AdminPageComponent]
+  declarations: [
+    AdminPageComponent,
+    EmployeeUsernamePatternDirective,
+  ]
 })
 export class AdminModule { }

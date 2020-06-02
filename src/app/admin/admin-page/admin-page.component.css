@@ -22,7 +22,7 @@ td, th {
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 1fr 1fr;
-    column-gap: 50px;
+    column-gap: 60px;
 }
 
 .manage-employee-buttons {
