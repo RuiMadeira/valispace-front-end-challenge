@@ -18,8 +18,11 @@ export class ManageEmployeeService {
     return JSON.parse(localStorage.getItem(EMPLOYEE_LIST_KEY)) ?? [];
   }
 
-  public checkPhoneAvailability(phone: string): boolean {
-    return !this.getEmployeeList().some(employee => employee.phone === phone);
+  public checkPhoneAvailability(employeeId: number, phone: string): boolean {
+    const check = employeeId ?
+      employee => employee.id !== employeeId && employee.phone === phone :
+      employee => employee.phone === phone;
+    return !this.getEmployeeList().some(check);
   }
 
   public createEmployee(this: ManageEmployeeService, employeeCreated: Employee): boolean {

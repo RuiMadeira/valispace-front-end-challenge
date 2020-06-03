@@ -19,7 +19,7 @@
 
       <mat-form-field>
         <mat-label>Phone</mat-label>
-        <input matInput type="text" name="phone" required minlength="9" maxlength="9"  appEmployeePhoneUnique #phone="ngModel" [ngModel]="employeeSelected?.phone" (ngModelChange)="employeeSelected ? employeeSelected.phone = $event : null">
+        <input matInput type="text" name="phone" required minlength="9" maxlength="9"  [appEmployeePhoneUnique]="employeeSelected?.id" #phone="ngModel" [ngModel]="employeeSelected?.phone" (ngModelChange)="employeeSelected ? employeeSelected.phone = $event : null">
         <button mat-button *ngIf="employeeSelected?.phone" matSuffix mat-icon-button aria-label="Clear" (click)="employeeSelected.phone=''">
           <mat-icon>close</mat-icon>
         </button>
