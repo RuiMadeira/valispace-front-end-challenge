@@ -94,7 +94,7 @@ function createNewUser(id: number): Employee {
   const name = NAMES[Math.round(Math.random() * (NAMES.length - 1))] + ' ' +
     NAMES[Math.round(Math.random() * (NAMES.length - 1))].charAt(0) + '.';
   const phone = PHONES[Math.round(Math.random() * (PHONES.length - 1))];
-  const role = ROLES[Math.round(Math.random() * (ROLES.length - 1))];
+  const role = EmployeeRole[ROLES[Math.round(Math.random() * (ROLES.length - 1))]];
 
   return { id, name, username, phone, role };
 }
