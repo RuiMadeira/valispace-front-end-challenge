@@ -5,13 +5,14 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Employee } from 'src/app/models/employee';
 import { EmployeeRole } from 'src/app/models/employee-role.enum';
 import { ManageEmployeeService } from '../../services/manage-employee/manage-employee.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 const NAMES: string[] = [
   'Maia', 'Asher', 'Olivia', 'Atticus', 'Amelia', 'Jack', 'Charlotte', 'Theodore', 'Isla', 'Oliver',
   'Isabella', 'Jasper', 'Cora', 'Levi', 'Violet', 'Arthur', 'Mia', 'Thomas', 'Elizabeth'
 ];
-const PHONES: number[] = [
-  992312312, 986733455, 971232343, 992362345, 912342303,
+const PHONES: string[] = [
+  '992312312', '986733455', '971232343', '992362345', '912342303',
 ];
 const ROLES: string[] = Object.values(EmployeeRole);
 
@@ -29,14 +30,14 @@ export class AdminPageComponent implements OnInit {
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
 
-  constructor(private manageEmployeeService: ManageEmployeeService) {
+  constructor(private manageEmployeeService: ManageEmployeeService, private snackBar: MatSnackBar) {
     // Create 100 employees
-    const employees = Array.from({length: 100}, (_, k) => createNewUser(k + 1));
-
-    this.dataSource = new MatTableDataSource(employees);
+    // const employees = Array.from({length: 100}, (_, k) => createNewUser(k + 1));
+    // this.dataSource = new MatTableDataSource(employees);
   }
 
   ngOnInit() {
+    this.dataSource = new MatTableDataSource(this.manageEmployeeService.getEmployeeList());
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
@@ -59,7 +60,12 @@ export class AdminPageComponent implements OnInit {
   }
 
   public addEmployee(): void {
-    this.manageEmployeeService.createEmployee(this.employeeSelected);
+    if (this.manageEmployeeService.createEmployee(this.employeeSelected)) {
+      this.employeeSelected = undefined;
+      this.snackBar.open('Employee added successfully', 'Close', { duration: 3000 });
+    } else {
+      this.snackBar.open('Error adding employee', 'Close', { duration: 3000 });
+    }
   }
 
   public editEmployee(): void {
@@ -67,16 +73,12 @@ export class AdminPageComponent implements OnInit {
   }
 
   public deleteEmployee(employee: Employee): void {
-    this.manageEmployeeService.editEmployee(employee);
+    this.manageEmployeeService.deleteEmployee(employee);
     this.employeeSelected = undefined;
   }
 
   public cancelEditing(): void {
     this.employeeSelected = undefined;
-  }
-
-  public clearPhone(): void {
-    this.employeeSelected.phone = undefined;
   }
 }
 

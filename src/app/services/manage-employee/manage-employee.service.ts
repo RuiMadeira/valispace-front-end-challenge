@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Employee } from 'src/app/models/employee';
 
 const EMPLOYEE_CURRENT_ID_KEY = 'employeeCurrentId';
-const EMPLOYEE_LIST_KEY = 'employeeCurrentId';
+const EMPLOYEE_LIST_KEY = 'employeeList';
 
 @Injectable({
   providedIn: 'root'
@@ -18,8 +18,8 @@ export class ManageEmployeeService {
     return JSON.parse(localStorage.getItem(EMPLOYEE_LIST_KEY)) ?? [];
   }
 
-  public checkPhoneAvailability(phone: number): boolean {
-    return !this.getEmployeeList().some((employee) => employee.phone === phone);
+  public checkPhoneAvailability(phone: string): boolean {
+    return !this.getEmployeeList().some(employee => employee.phone === phone);
   }
 
   public createEmployee(this: ManageEmployeeService, employeeCreated: Employee): boolean {
@@ -32,13 +32,13 @@ export class ManageEmployeeService {
   }
 
   public editEmployee(this: ManageEmployeeService, employeeEdited: Employee): boolean {
-    const newEmployeeList = this.getEmployeeList().map((employee) => employee.id === employeeEdited.id ? { ...employeeEdited } : employee);
+    const newEmployeeList = this.getEmployeeList().map(employee => employee.id === employeeEdited.id ? { ...employeeEdited } : employee);
     localStorage.setItem(EMPLOYEE_LIST_KEY, JSON.stringify(newEmployeeList));
     return true;
   }
 
   public deleteEmployee(this: ManageEmployeeService, employeeDeleted: Employee): boolean {
-    const newEmployeeList = this.getEmployeeList().filter((employee) => employee.id !== employeeDeleted.id);
+    const newEmployeeList = this.getEmployeeList().filter(employee => employee.id !== employeeDeleted.id);
     localStorage.setItem(EMPLOYEE_LIST_KEY, JSON.stringify(newEmployeeList));
     return true;
   }

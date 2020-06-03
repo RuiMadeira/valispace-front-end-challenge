@@ -3,7 +3,7 @@
   <mat-card *ngIf="employeeSelected" class="employee-card">
     <mat-card-header>
       <mat-card-title *ngIf="employeeSelected.id">Editing ID:{{employeeSelected.id}} - {{employeeSelected.username}}</mat-card-title>
-      <mat-card-title *ngIf="!employeeSelected.id">Addinging new employee</mat-card-title>
+      <mat-card-title *ngIf="!employeeSelected.id">Adding new employee</mat-card-title>
     </mat-card-header>
 
     <form class="employee-form" #employeeForm="ngForm">
@@ -19,12 +19,13 @@
 
       <mat-form-field>
         <mat-label>Phone</mat-label>
-        <input matInput type="text" name="phone" required minlength="9" maxlength="9" #phone="ngModel" [ngModel]="employeeSelected?.phone" (ngModelChange)="employeeSelected ? employeeSelected.phone = $event : null">
-        <button mat-button *ngIf="employeeSelected?.phone" matSuffix mat-icon-button aria-label="Clear" (click)="clearPhone()">
+        <input matInput type="text" name="phone" required minlength="9" maxlength="9"  appEmployeePhoneUnique #phone="ngModel" [ngModel]="employeeSelected?.phone" (ngModelChange)="employeeSelected ? employeeSelected.phone = $event : null">
+        <button mat-button *ngIf="employeeSelected?.phone" matSuffix mat-icon-button aria-label="Clear" (click)="employeeSelected.phone=''">
           <mat-icon>close</mat-icon>
         </button>
         <mat-error *ngIf="phone.invalid && phone.errors.required">Phone is required.</mat-error>
-        <mat-error *ngIf="phone.invalid && (phone.errors.minlength || phone.errors.maxlength)">9 digits are required of Phone field.</mat-error>
+        <mat-error *ngIf="phone.invalid && (phone.errors.minlength || phone.errors.maxlength)">Please enter a 9 digits phone number.</mat-error>
+        <mat-error *ngIf="phone.invalid && phone.errors.appEmployeePhoneUnique">That phone number is already associated with another employee.</mat-error>
       </mat-form-field>
 
       <mat-form-field>
@@ -51,7 +52,7 @@
       <ng-container *ngIf="employeeSelected.id">
         <button mat-raised-button class="manage-employee-button" color="primary" [disabled]="employeeForm.invalid" (click)="this.editEmployee()">Confirm</button>
         <button mat-raised-button class="manage-employee-button" color="warn" (click)="this.cancelEditing()">Cancel</button>
-        <button mat-raised-button class="manage-employee-button" color="warn">Delete</button>
+        <button mat-raised-button class="manage-employee-button" color="warn" (click)="this.deleteEmployee(employeeSelected)">Delete</button>
       </ng-container>
       <ng-container *ngIf="!employeeSelected.id">
         <button mat-raised-button class="manage-employee-button" color="primary" [disabled]="employeeForm.invalid" (click)="this.addEmployee()">Add</button>
@@ -107,7 +108,7 @@
           <td mat-cell *matCellDef="let row">
             <div class="manage-employee-buttons" >
               <button class="manage-employee-button" mat-raised-button color="primary" (click)="this.selectEmployee(row)">Edit</button>
-              <button class="manage-employee-button" mat-raised-button color="warn">Delete</button>
+              <button class="manage-employee-button" mat-raised-button color="warn" (click)="this.deleteEmployee(row)">Delete</button>
             </div>
           </td>
         </ng-container>

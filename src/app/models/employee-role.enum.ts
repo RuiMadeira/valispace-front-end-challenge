@@ -1,7 +1,7 @@
 export enum EmployeeRole {
-    CEO = "UP",
-    Designer = "Designer",
-    Developer = "Developer",
-    Sales = "Sales",
-    PR = "PR",
+    CEO = 'CEO',
+    Designer = 'Designer',
+    Developer = 'Developer',
+    Sales = 'Sales',
+    PR = 'PR',
 }

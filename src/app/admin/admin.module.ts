@@ -11,8 +11,10 @@ import { MatCardModule } from '@angular/material/card';
 import { FormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 import { EmployeeUsernamePatternDirective } from './../validations/EmployeeUserNamePattern.directive';
+import { EmployeePhoneUniqueDirective } from './../validations/EmployeePhoneUnique.directive';
 
 @NgModule({
   imports: [
@@ -27,10 +29,12 @@ import { EmployeeUsernamePatternDirective } from './../validations/EmployeeUserN
     FormsModule,
     MatIconModule,
     MatSelectModule,
+    MatSnackBarModule,
   ],
   declarations: [
     AdminPageComponent,
     EmployeeUsernamePatternDirective,
+    EmployeePhoneUniqueDirective,
   ]
 })
 export class AdminModule { }
