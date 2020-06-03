@@ -51,7 +51,7 @@ export class AdminPageComponent implements OnInit {
     }
   }
 
-  public selectEmployee(employee: Employee): void {
+  public selectEmployeeForEdit(employee: Employee): void {
     this.employeeSelected = { ...employee };
   }
 
@@ -60,25 +60,32 @@ export class AdminPageComponent implements OnInit {
   }
 
   public addEmployee(): void {
-    if (this.manageEmployeeService.createEmployee(this.employeeSelected)) {
-      this.employeeSelected = undefined;
-      this.snackBar.open('Employee added successfully', 'Close', { duration: 3000 });
-    } else {
-      this.snackBar.open('Error adding employee', 'Close', { duration: 3000 });
-    }
+    this.postActionBehaviour(this.manageEmployeeService.createEmployee(this.employeeSelected),
+      'Employee added successfully',  'Error adding employee');
   }
 
-  public editEmployee(): void {
-    this.manageEmployeeService.editEmployee(this.employeeSelected);
+  public editSelectedEmployee(): void {
+    this.postActionBehaviour(this.manageEmployeeService.editEmployee(this.employeeSelected),
+      'Employee edited successfully',  'Error editing employee');
   }
 
   public deleteEmployee(employee: Employee): void {
-    this.manageEmployeeService.deleteEmployee(employee);
-    this.employeeSelected = undefined;
+    this.postActionBehaviour(this.manageEmployeeService.deleteEmployee(employee),
+      'Employee deleted successfully',  'Error deleting employee');
   }
 
   public cancelEditing(): void {
     this.employeeSelected = undefined;
+  }
+
+  private postActionBehaviour(condition: boolean, messageSuccess: string, messageFailure: string): void {
+    if (condition) {
+      this.snackBar.open(messageSuccess, 'Close', { duration: 3000 });
+      this.employeeSelected = undefined;
+      this.dataSource = new MatTableDataSource(this.manageEmployeeService.getEmployeeList());
+    } else {
+      this.snackBar.open(messageFailure, 'Close', { duration: 3000 });
+    }
   }
 }
 
