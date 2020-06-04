@@ -1,1 +1,23 @@
-<p>posts-page works!</p>
+<div class="posts-page">
+
+<mat-card>
+    <mat-card-header>
+        <mat-card-title>Create new post</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+        <p>Start a new post</p>
+    </mat-card-content>
+</mat-card>
+
+<mat-card *ngFor="let post of postsList">
+    <mat-card-header>
+      <mat-card-title>EmployeeName</mat-card-title>
+      <mat-card-subtitle>Created - {{post.created | date : 'yyyy-MM-dd'}}</mat-card-subtitle>
+      <mat-card-subtitle *ngIf="post.edited">Edited - {{post.edited | date : 'yyyy-MM-dd'}}</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <p>{{post.text}}</p>
+    </mat-card-content>
+</mat-card>
+
+</div>

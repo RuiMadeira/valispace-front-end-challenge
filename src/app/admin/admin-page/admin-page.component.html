@@ -1,6 +1,6 @@
-<div class="employeeSelected ? admin-page-selected : admin-page">
+<div class="admin-page">
 
-  <mat-card *ngIf="employeeSelected" class="employee-card">
+  <mat-card *ngIf="employeeSelected">
     <mat-card-header>
       <mat-card-title *ngIf="employeeSelected.id">Editing ID:{{employeeSelected.id}} - {{employeeSelected.username}}</mat-card-title>
       <mat-card-title *ngIf="!employeeSelected.id">Adding new employee</mat-card-title>

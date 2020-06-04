@@ -1,0 +1,5 @@
+.posts-page {
+    display: grid;
+    row-gap: 40px;
+    margin: 40px;
+}
