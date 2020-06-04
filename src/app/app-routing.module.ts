@@ -6,6 +6,7 @@ import { PostsPageComponent } from '../app/posts/posts-page/posts-page.component
 const routes: Routes = [
   { path: 'admin', component: AdminPageComponent },
   { path: '', component: PostsPageComponent },
+  { path: '**', component: PostsPageComponent },
 ];
 
 @NgModule({

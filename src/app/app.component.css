@@ -35,7 +35,11 @@ p {
 }
 
 .toolbar img {
-  margin: 0 16px;
+  margin: 0 16px 0 40px;
+}
+
+.toolbar-button {
+  margin-right: 40px;
 }
 
 .toolbar #twitter-logo {

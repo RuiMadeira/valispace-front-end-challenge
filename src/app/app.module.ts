@@ -5,6 +5,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
+import { MatButtonModule } from '@angular/material/button';
+
 import { AdminModule } from './admin/admin.module';
 import { PostsModule } from './posts/posts.module';
 
@@ -16,6 +18,7 @@ import { PostsModule } from './posts/posts.module';
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+    MatButtonModule,
     AdminModule,
     PostsModule,
   ],

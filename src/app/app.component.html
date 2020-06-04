@@ -208,6 +208,9 @@
   />
   <span>Valispace Front-End Challenge</span>
     <div class="spacer"></div>
+    
+    <button *ngIf="this.router.url === '/'" mat-raised-button class="toolbar-button" routerLink="/admin">Open Admin Panel</button>
+    <button *ngIf="this.router.url === '/admin'" mat-raised-button class="toolbar-button" routerLink="/">Back to Posts</button>
 </div>
 
 <router-outlet></router-outlet>
