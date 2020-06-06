@@ -32,20 +32,22 @@ export class PostsPageComponent implements OnInit {
     // this.postsList = this.managePostService.getPostList();
   }
 
-  public selectEmployeeForEdit(post: Post): void {
+  public selectPostForEdit(post: Post): void {
     this.postSelected = { ...post };
   }
 
-  public newEmployee(): void {
-    this.postSelected = { id: undefined, employeeId: undefined, text: undefined, created: undefined, edited: undefined };
+  public newPost(): void {
+    if (!this.postSelected) {
+      this.postSelected = { id: undefined, employeeId: undefined, text: undefined, created: undefined, edited: undefined };
+    }
   }
 
-  public addEmployee(): void {
+  public addPost(): void {
     this.postActionBehaviour(this.managePostService.createPost(this.postSelected),
       'Employee added successfully',  'Error adding employee');
   }
 
-  public editSelectedEmployee(): void {
+  public editSelectedPost(): void {
     this.postActionBehaviour(this.managePostService.editPost(this.postSelected),
       'Employee edited successfully',  'Error editing employee');
   }

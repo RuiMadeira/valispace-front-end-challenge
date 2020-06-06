@@ -1,23 +1,29 @@
 <div class="posts-page">
 
-<mat-card>
-    <mat-card-header>
-        <mat-card-title>Create new post</mat-card-title>
-    </mat-card-header>
-    <mat-card-content>
-        <p>Start a new post</p>
-    </mat-card-content>
-</mat-card>
+    <mat-card>
+        <mat-card-header>
+            <mat-card-title>Create new post</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <div class="new-post" contenteditable="true" placeholder="Write a new post..." (onclick)="this.newPost()" 
+                [textContent]="postSelected?.text" (input)="postSelected=$event.target.textContent">
+            </div>
+        </mat-card-content>
+        <mat-card-actions>
+            <button mat-raised-button class="manage-employee-button" color="primary" [disabled]="!postSelected?.text" (click)="this.addPost()">Create</button>
+            <button mat-raised-button class="manage-employee-button" color="warn" (click)="this.cancelEditing()">Cancel</button>    
+        </mat-card-actions>
+    </mat-card>
 
-<mat-card *ngFor="let post of postsList">
-    <mat-card-header>
-      <mat-card-title>EmployeeName</mat-card-title>
-      <mat-card-subtitle>Created - {{post.created | date : 'yyyy-MM-dd'}}</mat-card-subtitle>
-      <mat-card-subtitle *ngIf="post.edited">Edited - {{post.edited | date : 'yyyy-MM-dd'}}</mat-card-subtitle>
-    </mat-card-header>
-    <mat-card-content>
-      <p>{{post.text}}</p>
-    </mat-card-content>
-</mat-card>
+    <mat-card *ngFor="let post of postsList">
+        <mat-card-header>
+        <mat-card-title>EmployeeName</mat-card-title>
+        <mat-card-subtitle>Created - {{post.created | date : 'yyyy-MM-dd'}}</mat-card-subtitle>
+        <mat-card-subtitle *ngIf="post.edited">Edited - {{post.edited | date : 'yyyy-MM-dd'}}</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+        <p>{{post.text}}</p>
+        </mat-card-content>
+    </mat-card>
 
 </div>
