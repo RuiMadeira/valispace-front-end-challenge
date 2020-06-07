@@ -140,6 +140,14 @@ export class PostsPageComponent implements OnInit {
       this.snackBar.open(messageFailure, 'Close', { duration: 3000 });
     }
   }
+
+  public trackById(_, item: Post) {
+    return item.id;
+  }
+
+  public trackByIndex(index: number, _) {
+    return index;
+  }
 }
 
 function randomDate(start: Date, end: Date) {
