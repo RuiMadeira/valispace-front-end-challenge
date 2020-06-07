@@ -83,6 +83,8 @@ export class AdminPageComponent implements OnInit {
       this.snackBar.open(messageSuccess, 'Close', { duration: 3000 });
       this.employeeSelected = undefined;
       this.dataSource = new MatTableDataSource(this.manageEmployeeService.getEmployeeList());
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
     } else {
       this.snackBar.open(messageFailure, 'Close', { duration: 3000 });
     }

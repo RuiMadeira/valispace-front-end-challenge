@@ -46,6 +46,10 @@ export class ManageEmployeeService {
     return true;
   }
 
+  public getEmployeeById(id: number): Employee {
+    return this.getEmployeeList().filter(employee => employee.id === id)[0];
+  }
+
   public getEmployeesByUsername(searchTerm: string): Array<Employee> {
     return this.getEmployeeList().filter(employee => employee.username.toLowerCase().startsWith(searchTerm));
   }

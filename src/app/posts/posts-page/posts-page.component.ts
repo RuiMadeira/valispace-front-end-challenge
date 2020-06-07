@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { Employee } from 'src/app/models/employee';
+import { PostItem } from 'src/app/models/post-item';
+import { PostItemType } from 'src/app/models/post-item-type.enum';
 import { Post } from 'src/app/models/post';
 import { ManageEmployeeService } from '../../services/manage-employee/manage-employee.service';
 import { ManagePostService } from '../../services/manage-post/manage-post.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MentionConfig } from 'angular-mentions';
+import { Mention } from 'src/app/models/mention';
 
 const TEXT_PIECES: string[] = [
   'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
@@ -19,7 +21,9 @@ const TEXT_PIECES: string[] = [
   styleUrls: ['./posts-page.component.css']
 })
 export class PostsPageComponent implements OnInit {
-  postsList: Array<Post>;
+  // To be able to use enum in template
+  PostItemType = PostItemType;
+  postsList: Array<Post> = [];
   postSelected: Post;
   mentionConfig: MentionConfig = {
     mentions: [
@@ -43,19 +47,37 @@ export class PostsPageComponent implements OnInit {
   constructor(private managePostService: ManagePostService, private manageEmployeeService: ManageEmployeeService,
               private snackBar: MatSnackBar) {
     // Create 100 posts
-    const posts = Array.from({length: 100}, (_, k) => createNewPost(k + 1));
-    this.postsList = posts;
+    // const posts = Array.from({length: 100}, (_, k) => createNewPost(k + 1));
+    // this.postsList = posts;
   }
 
   ngOnInit(): void {
-    // this.postsList = this.managePostService.getPostList();
+    this.postsList = this.managePostService.getPostList();
+  }
+
+  public getEmployeeUsernameFromId(id: number): string {
+    return this.manageEmployeeService.getEmployeeById(id)?.username ?? 'Unknown employee';
+  }
+
+  private isMention(item: string): boolean {
+    const triggerChar = item.charAt(0);
+    if (triggerChar !== '@' && triggerChar !== '#') {
+      return false;
+    }
+    const possibleMention = JSON.parse(item.substring(1));
+    return  ('id' in possibleMention) && ('field' in possibleMention);
+  }
+
+  public getListOfPostItems(postText: string): Array<PostItem> {
+    return postText.split(/([@#]{.+})/).map(item => this.isMention(item) ?
+      { type: PostItemType.Mention, value: JSON.parse(item.substring(1)) as Mention } :
+      { type: PostItemType.Text, value: item});
   }
 
   public getMentionList(searchTerm: string) {
     const triggerChar = searchTerm.charAt(0);
     let items = [];
     if (triggerChar === '@') {
-      console.log(searchTerm.substring(1));
       items = this.manageEmployeeService.getEmployeesByUsername(searchTerm.substring(1));
     } else if (triggerChar === '#') {
       items = this.manageEmployeeService.getEmployeesByPhone(searchTerm.substring(1));
@@ -66,12 +88,8 @@ export class PostsPageComponent implements OnInit {
     };
   }
 
-  public processMentionSelection(selection: string) {
-    console.log(selection);
-  }
-
-  public processPostFormInput(input: string) {
-    console.log(input);
+  public getMentionChipValue(mention: Mention): string {
+    return this.manageEmployeeService.getEmployeeById(mention.id)[mention.field];
   }
 
   public selectPostForEdit(post: Post): void {
@@ -106,9 +124,9 @@ export class PostsPageComponent implements OnInit {
 
   private mentionSelect(item: any, triggerChar: string): string {
     if (triggerChar === '@') {
-      return `${triggerChar}{id: ${item.id}, field: username}`;
+      return `${triggerChar}{"id": ${item.id}, "field": "username"}`;
     } else if (triggerChar === '#') {
-      return `${triggerChar}{id: ${item.id}, field: phone}`;
+      return `${triggerChar}{"id": ${item.id}, "field": "phone"}`;
     }
     return '';
   }
@@ -117,6 +135,7 @@ export class PostsPageComponent implements OnInit {
     if (condition) {
       this.snackBar.open(messageSuccess, 'Close', { duration: 3000 });
       this.postSelected = undefined;
+      this.postsList = this.managePostService.getPostList();
     } else {
       this.snackBar.open(messageFailure, 'Close', { duration: 3000 });
     }
