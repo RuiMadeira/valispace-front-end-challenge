@@ -25,7 +25,7 @@ export class ManageEmployeeService {
     return !this.getEmployeeList().some(check);
   }
 
-  public createEmployee(this: ManageEmployeeService, employeeCreated: Employee): boolean {
+  public createEmployee(employeeCreated: Employee): boolean {
     const id = this.getCurrentEmployeeId() + 1;
     const currentEmployeeList = this.getEmployeeList();
     const newEmployee = { ...employeeCreated, id };
@@ -34,15 +34,23 @@ export class ManageEmployeeService {
     return true;
   }
 
-  public editEmployee(this: ManageEmployeeService, employeeEdited: Employee): boolean {
+  public editEmployee(employeeEdited: Employee): boolean {
     const newEmployeeList = this.getEmployeeList().map(employee => employee.id === employeeEdited.id ? { ...employeeEdited } : employee);
     localStorage.setItem(EMPLOYEE_LIST_KEY, JSON.stringify(newEmployeeList));
     return true;
   }
 
-  public deleteEmployee(this: ManageEmployeeService, employeeDeleted: Employee): boolean {
+  public deleteEmployee(employeeDeleted: Employee): boolean {
     const newEmployeeList = this.getEmployeeList().filter(employee => employee.id !== employeeDeleted.id);
     localStorage.setItem(EMPLOYEE_LIST_KEY, JSON.stringify(newEmployeeList));
     return true;
+  }
+
+  public getEmployeesByUsername(searchTerm: string): Array<Employee> {
+    return this.getEmployeeList().filter(employee => employee.username.toLowerCase().startsWith(searchTerm));
+  }
+
+  public getEmployeesByPhone(searchTerm: string): Array<Employee> {
+    return this.getEmployeeList().filter(employee => employee.phone.startsWith(searchTerm));
   }
 }

@@ -5,6 +5,8 @@ import { MatCardModule } from '@angular/material/card';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MentionModule } from 'angular-mentions';
+import { MatTabsModule } from '@angular/material/tabs';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [PostsPageComponent],
@@ -14,6 +16,8 @@ import { MentionModule } from 'angular-mentions';
     MatInputModule,
     MatButtonModule,
     MentionModule,
+    MatTabsModule,
+    FormsModule,
   ]
 })
 export class PostsModule { }

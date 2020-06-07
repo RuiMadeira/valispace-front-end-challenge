@@ -24,13 +24,15 @@ export class PostsPageComponent implements OnInit {
   mentionConfig: MentionConfig = {
     mentions: [
       {
-          items: ['yeap', 'heyhey'],
+          items: [],
+          labelKey: 'username',
           triggerChar: '@',
           returnTrigger: true,
           mentionSelect: this.mentionSelect,
       },
       {
-          items: ['djebe', 'dudeebe'],
+          items: [],
+          labelKey: 'phone',
           triggerChar: '#',
           returnTrigger: true,
           mentionSelect: this.mentionSelect,
@@ -40,7 +42,7 @@ export class PostsPageComponent implements OnInit {
 
   constructor(private managePostService: ManagePostService, private manageEmployeeService: ManageEmployeeService,
               private snackBar: MatSnackBar) {
-    // Create 100 post
+    // Create 100 posts
     const posts = Array.from({length: 100}, (_, k) => createNewPost(k + 1));
     this.postsList = posts;
   }
@@ -50,7 +52,18 @@ export class PostsPageComponent implements OnInit {
   }
 
   public getMentionList(searchTerm: string) {
-    console.log(searchTerm);
+    const triggerChar = searchTerm.charAt(0);
+    let items = [];
+    if (triggerChar === '@') {
+      console.log(searchTerm.substring(1));
+      items = this.manageEmployeeService.getEmployeesByUsername(searchTerm.substring(1));
+    } else if (triggerChar === '#') {
+      items = this.manageEmployeeService.getEmployeesByPhone(searchTerm.substring(1));
+    }
+    this.mentionConfig = {
+      ...this.mentionConfig,
+      mentions: this.mentionConfig.mentions.map(mention => mention.triggerChar === triggerChar ? { ...mention, items} : mention)
+    };
   }
 
   public processMentionSelection(selection: string) {
@@ -79,12 +92,12 @@ export class PostsPageComponent implements OnInit {
 
   public addPost(): void {
     this.postActionBehaviour(this.managePostService.createPost(this.postSelected),
-      'Employee added successfully',  'Error adding employee');
+      'Post created successfully',  'Error creating post');
   }
 
   public editSelectedPost(): void {
     this.postActionBehaviour(this.managePostService.editPost(this.postSelected),
-      'Employee edited successfully',  'Error editing employee');
+      'Post edited successfully',  'Error editing post');
   }
 
   public cancelEditing(): void {
@@ -92,8 +105,12 @@ export class PostsPageComponent implements OnInit {
   }
 
   private mentionSelect(item: any, triggerChar: string): string {
-    console.log(item);
-    return `<span>${item.label}</span>`;
+    if (triggerChar === '@') {
+      return `${triggerChar}{id: ${item.id}, field: username}`;
+    } else if (triggerChar === '#') {
+      return `${triggerChar}{id: ${item.id}, field: phone}`;
+    }
+    return '';
   }
 
   private postActionBehaviour(condition: boolean, messageSuccess: string, messageFailure: string): void {

@@ -4,7 +4,11 @@
     margin: 40px;
 }
 
-.new-post[placeholder]:empty:before {
-    content: attr(placeholder);
-    color: #555; 
+.new-post-form {
+    width: 100%;
+}
+
+.new-post-form-field {
+    height: 100%;
+    width: 100%;
 }
