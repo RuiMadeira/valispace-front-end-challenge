@@ -4,6 +4,7 @@ import { Post } from 'src/app/models/post';
 import { ManageEmployeeService } from '../../services/manage-employee/manage-employee.service';
 import { ManagePostService } from '../../services/manage-post/manage-post.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MentionConfig } from 'angular-mentions';
 
 const TEXT_PIECES: string[] = [
   'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
@@ -20,6 +21,22 @@ const TEXT_PIECES: string[] = [
 export class PostsPageComponent implements OnInit {
   postsList: Array<Post>;
   postSelected: Post;
+  mentionConfig: MentionConfig = {
+    mentions: [
+      {
+          items: ['yeap', 'heyhey'],
+          triggerChar: '@',
+          returnTrigger: true,
+          mentionSelect: this.mentionSelect,
+      },
+      {
+          items: ['djebe', 'dudeebe'],
+          triggerChar: '#',
+          returnTrigger: true,
+          mentionSelect: this.mentionSelect,
+      },
+    ],
+  };
 
   constructor(private managePostService: ManagePostService, private manageEmployeeService: ManageEmployeeService,
               private snackBar: MatSnackBar) {
@@ -32,13 +49,31 @@ export class PostsPageComponent implements OnInit {
     // this.postsList = this.managePostService.getPostList();
   }
 
+  public getMentionList(searchTerm: string) {
+    console.log(searchTerm);
+  }
+
+  public processMentionSelection(selection: string) {
+    console.log(selection);
+  }
+
+  public processPostFormInput(input: string) {
+    console.log(input);
+  }
+
   public selectPostForEdit(post: Post): void {
     this.postSelected = { ...post };
   }
 
   public newPost(): void {
     if (!this.postSelected) {
-      this.postSelected = { id: undefined, employeeId: undefined, text: undefined, created: undefined, edited: undefined };
+    this.postSelected = { id: undefined, employeeId: undefined, text: undefined, created: undefined, edited: undefined };
+    }
+  }
+
+  public onBlurNewPost(): void {
+    if (this.postSelected && !this.postSelected.id && (!this.postSelected.text || this.postSelected.text === '')) {
+      this.postSelected = undefined;
     }
   }
 
@@ -54,6 +89,11 @@ export class PostsPageComponent implements OnInit {
 
   public cancelEditing(): void {
     this.postSelected = undefined;
+  }
+
+  private mentionSelect(item: any, triggerChar: string): string {
+    console.log(item);
+    return `<span>${item.label}</span>`;
   }
 
   private postActionBehaviour(condition: boolean, messageSuccess: string, messageFailure: string): void {
