@@ -12,3 +12,9 @@
     height: 100%;
     width: 100%;
 }
+
+.edit-post-buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+}
