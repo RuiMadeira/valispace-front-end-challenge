@@ -3,11 +3,11 @@
 
         <mat-card-title *ngIf="this.isNewPost">Create new post</mat-card-title>
         
-        <mat-card-title *ngIf="!this.isNewPost">{{this.getEmployeeUsernameFromId(post?.employeeId)}}</mat-card-title>
-        <div *ngIf="!this.isNewPost" class="post-card-dates">
-            <mat-card-subtitle *ngIf="post?.edited">Edited - {{post?.edited | date : 'yyyy-MM-dd'}}</mat-card-subtitle>
-            <mat-card-subtitle>Created - {{post?.created | date : 'yyyy-MM-dd'}}</mat-card-subtitle>
-        </div>
+        <mat-card-title *ngIf="!this.isNewPost">{{this.getEmployeeUsernameFromId(this.post?.employeeId)}}</mat-card-title>
+        <mat-card-subtitle *ngIf="!this.isNewPost" class="post-card-dates">
+            <span *ngIf="post?.edited">Edited - {{post?.edited | date : 'yyyy-MM-dd'}}</span>
+            <span>Created - {{post?.created | date : 'yyyy-MM-dd'}}</span>
+        </mat-card-subtitle>
 
     </mat-card-header>
     <mat-card-content>
@@ -15,8 +15,8 @@
         <form *ngIf="this.isNewPost && !this.isPreviewing" class="new-post-form">
             <mat-form-field [floatLabel]="'never'" class="new-post-form-field">
                 <textarea matInput cdkTextareaAutosize name="post" class="new-post" placeholder="Write a new post..."
-                (focus)="this.newPost()" (blur)="this.onBlurNewPost()" [ngModel]="post?.text" 
-                (ngModelChange)="post ? post.text = $event : null"
+                (focus)="this.newPost()" (blur)="this.onBlurNewPost()" [ngModel]="this.post?.text" 
+                (ngModelChange)="this.post ? this.post.text = $event : null"
                 [mentionConfig]="mentionConfig" (searchTerm)="this.getMentionList($event)"></textarea>
             </mat-form-field>
         </form>
@@ -24,12 +24,12 @@
         <form *ngIf="!this.isNewPost && this.isEditing && !this.isPreviewing" class="new-post-form">
             <mat-form-field [floatLabel]="'never'" class="new-post-form-field">
                 <textarea matInput cdkTextareaAutosize name="post" class="new-post" placeholder="Edit the post..."
-                [ngModel]="post?.text" (ngModelChange)="post ? post.text = $event : null"
+                [ngModel]="this.post?.text" (ngModelChange)="this.post ? this.post.text = $event : null"
                 [mentionConfig]="mentionConfig" (searchTerm)="this.getMentionList($event)"></textarea>
             </mat-form-field>
         </form>
 
-        <app-post-text *ngIf="!this.isNewPost && (!this.isEditing || this.isPreviewing)" [post]="post"></app-post-text>
+        <app-post-text *ngIf="!this.isNewPost && (!this.isEditing || this.isPreviewing)" [post]="this.post"></app-post-text>
         <app-post-text *ngIf="this.isNewPost && this.isPreviewing" [post]="post"></app-post-text>
 
     </mat-card-content>

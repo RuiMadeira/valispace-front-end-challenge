@@ -1,5 +1,5 @@
 <div class="posts-page">
     <app-post [isNewPost]='true' (created)='this.createdPost($event)'></app-post>
 
-    <app-post *ngFor="let post of postsList trackBy: this.trackById" [isNewPost]='false' [post]=post (edited)='this.editedPost($event)'></app-post>
+    <app-post *ngFor="let post of postsList trackBy: this.trackById" [isNewPost]='false' [originalPost]=post (edited)='this.editedPost($event)'></app-post>
 </div>

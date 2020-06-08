@@ -4,8 +4,8 @@
             <mat-chip [satPopoverAnchor]='popover' satPopoverAnchor (mouseenter)="popover.open()" (mouseleave)="popover.close()"
             [selectable]="false" selected color="primary">{{this.getMentionChipValue(item.value)}}</mat-chip>
             <sat-popover #popover verticalAlign="above" horizontalAlign="center">
-                <mat-card>
-                <mat-card-content class="employee-info">
+                <mat-card class="employee-info">
+                <mat-card-content class="employee-info-content">
                     <h4 *ngFor="let value of this.getEmployeeInfo(item.value) trackBy: this.trackByIndex">{{value}}</h4>
                 </mat-card-content>
                 </mat-card>

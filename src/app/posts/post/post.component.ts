@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, OnChanges, Input, Output, EventEmitter, SimpleChanges } from '@angular/core';
 import { Post } from 'src/app/models/post';
 import { ManageEmployeeService } from '../../services/manage-employee/manage-employee.service';
 import { ManagePostService } from '../../services/manage-post/manage-post.service';
@@ -9,8 +9,9 @@ import { MentionConfig } from 'angular-mentions';
   templateUrl: './post.component.html',
   styleUrls: ['./post.component.css']
 })
-export class PostComponent {
-  @Input() post: Post;
+export class PostComponent implements OnInit, OnChanges {
+  @Input() originalPost: Post;
+  post: Post;
   @Input() isNewPost = false;
   @Output() created = new EventEmitter<boolean>();
   @Output() edited = new EventEmitter<boolean>();
@@ -36,6 +37,16 @@ export class PostComponent {
   isPreviewing = false;
 
   constructor(private managePostService: ManagePostService, private manageEmployeeService: ManageEmployeeService) {}
+
+  ngOnInit() {
+    this.post = this.originalPost ? { ...this.originalPost } : undefined;
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    if ('originalPost' in changes) {
+      this.post = { ...this.originalPost };
+    }
+  }
 
   private mentionSelect(item: any, triggerChar: string): string {
     if (triggerChar === '@') {
@@ -91,6 +102,8 @@ export class PostComponent {
   public cancelEditing(): void {
     if (this.isNewPost) {
       this.post = undefined;
+    } else {
+      this.post = { ...this.originalPost };
     }
     this.isEditing = false;
     this.isPreviewing = false;
