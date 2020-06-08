@@ -6,6 +6,8 @@ import { Post } from 'src/app/models/post';
 import { ManageEmployeeService } from '../../services/manage-employee/manage-employee.service';
 import { EmployeeRole } from 'src/app/models/employee-role.enum';
 
+const UNKNOWN_EMPLOYEE = 'Unknown employee';
+
 @Component({
   selector: 'app-post-text',
   templateUrl: './post-text.component.html',
@@ -34,11 +36,14 @@ export class PostTextComponent {
   }
 
   public getMentionChipValue(mention: Mention): string {
-    return this.manageEmployeeService.getEmployeeById(mention.id)[mention.field];
+    return this.manageEmployeeService.getEmployeeById(mention.id)?.[mention.field] ?? UNKNOWN_EMPLOYEE;
   }
 
   public getEmployeeInfo(mention: Mention): Array<number | string | EmployeeRole> {
     const employee = this.manageEmployeeService.getEmployeeById(mention.id);
+    if (!employee) {
+      return [];
+    }
     return [employee.name, employee.username, employee.phone, employee.role];
   }
 
