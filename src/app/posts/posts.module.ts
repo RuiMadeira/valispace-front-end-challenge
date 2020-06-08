@@ -8,9 +8,11 @@ import { MentionModule } from 'angular-mentions';
 import { MatTabsModule } from '@angular/material/tabs';
 import { FormsModule } from '@angular/forms';
 import { MatChipsModule } from '@angular/material/chips';
+import { PostTextComponent } from './post-text/post-text.component';
+import { SatPopoverModule } from '@ncstate/sat-popover';
 
 @NgModule({
-  declarations: [PostsPageComponent],
+  declarations: [PostsPageComponent, PostTextComponent],
   imports: [
     CommonModule,
     MatCardModule,
@@ -20,6 +22,7 @@ import { MatChipsModule } from '@angular/material/chips';
     MatTabsModule,
     FormsModule,
     MatChipsModule,
+    SatPopoverModule,
   ]
 })
 export class PostsModule { }

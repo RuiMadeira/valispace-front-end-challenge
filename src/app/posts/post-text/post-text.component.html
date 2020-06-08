@@ -1,0 +1,20 @@
+<ng-container *ngFor="let item of this.getListOfPostItems(post.text) trackBy: this.trackByIndex">
+    <ng-container [ngSwitch]="item.type">
+        <ng-container *ngSwitchCase="PostItemType.Mention">
+            <mat-chip [satPopoverAnchor]='popover' satPopoverAnchor (mouseenter)="popover.open()" (mouseleave)="popover.close()"
+            [selectable]="false" selected color="primary">{{this.getMentionChipValue(item.value)}}</mat-chip>
+            <sat-popover #popover verticalAlign="above" horizontalAlign="center">
+                <mat-card>
+                <mat-card-content class="employee-info">
+                    <h4 *ngFor="let value of this.getEmployeeInfo(item.value) trackBy: this.trackByIndex">{{value}}</h4>
+                </mat-card-content>
+                </mat-card>
+            </sat-popover>
+        </ng-container>
+        <span *ngSwitchDefault>{{item.value}}</span>
+    </ng-container>
+</ng-container>
+
+<!-- Forcing calling the chip list component so that we are able to have the chip with the correct style outside the list -->
+<mat-chip-list>
+</mat-chip-list>

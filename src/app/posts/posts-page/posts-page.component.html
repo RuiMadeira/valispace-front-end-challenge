@@ -27,9 +27,6 @@
         </mat-card-actions>
     </mat-card>
 
-    <mat-chip-list>
-    </mat-chip-list>
-
     <mat-card *ngFor="let post of postsList trackBy: this.trackById">
         <mat-card-header>
         <mat-card-title>{{this.getEmployeeUsernameFromId(post.employeeId)}}</mat-card-title>
@@ -37,12 +34,7 @@
         <mat-card-subtitle *ngIf="post.edited">Edited - {{post.edited | date : 'yyyy-MM-dd'}}</mat-card-subtitle>
         </mat-card-header>
         <mat-card-content>
-            <ng-container *ngFor="let item of this.getListOfPostItems(post.text) trackBy: this.trackByIndex">
-                <ng-container [ngSwitch]="item.type">
-                    <mat-chip *ngSwitchCase="PostItemType.Mention" [selectable]="false" selected color="primary">{{this.getMentionChipValue(item.value)}}</mat-chip>
-                    <span *ngSwitchDefault>{{item.value}}</span>
-                </ng-container>
-            </ng-container>
+            <app-post-text [post]="post"></app-post-text>
         </mat-card-content>
     </mat-card>
 </div>

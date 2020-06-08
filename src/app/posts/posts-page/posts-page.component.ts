@@ -1,12 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { PostItem } from 'src/app/models/post-item';
-import { PostItemType } from 'src/app/models/post-item-type.enum';
 import { Post } from 'src/app/models/post';
 import { ManageEmployeeService } from '../../services/manage-employee/manage-employee.service';
 import { ManagePostService } from '../../services/manage-post/manage-post.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MentionConfig } from 'angular-mentions';
-import { Mention } from 'src/app/models/mention';
 
 const TEXT_PIECES: string[] = [
   'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
@@ -21,8 +18,6 @@ const TEXT_PIECES: string[] = [
   styleUrls: ['./posts-page.component.css']
 })
 export class PostsPageComponent implements OnInit {
-  // To be able to use enum in template
-  PostItemType = PostItemType;
   postsList: Array<Post> = [];
   postSelected: Post;
   mentionConfig: MentionConfig = {
@@ -59,21 +54,6 @@ export class PostsPageComponent implements OnInit {
     return this.manageEmployeeService.getEmployeeById(id)?.username ?? 'Unknown employee';
   }
 
-  private isMention(item: string): boolean {
-    const triggerChar = item.charAt(0);
-    if (triggerChar !== '@' && triggerChar !== '#') {
-      return false;
-    }
-    const possibleMention = JSON.parse(item.substring(1));
-    return  ('id' in possibleMention) && ('field' in possibleMention);
-  }
-
-  public getListOfPostItems(postText: string): Array<PostItem> {
-    return postText.split(/([@#]{.+})/).map(item => this.isMention(item) ?
-      { type: PostItemType.Mention, value: JSON.parse(item.substring(1)) as Mention } :
-      { type: PostItemType.Text, value: item});
-  }
-
   public getMentionList(searchTerm: string) {
     const triggerChar = searchTerm.charAt(0);
     let items = [];
@@ -86,10 +66,6 @@ export class PostsPageComponent implements OnInit {
       ...this.mentionConfig,
       mentions: this.mentionConfig.mentions.map(mention => mention.triggerChar === triggerChar ? { ...mention, items} : mention)
     };
-  }
-
-  public getMentionChipValue(mention: Mention): string {
-    return this.manageEmployeeService.getEmployeeById(mention.id)[mention.field];
   }
 
   public selectPostForEdit(post: Post): void {
@@ -143,10 +119,6 @@ export class PostsPageComponent implements OnInit {
 
   public trackById(_, item: Post) {
     return item.id;
-  }
-
-  public trackByIndex(index: number, _) {
-    return index;
   }
 }
 

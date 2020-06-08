@@ -1,0 +1,6 @@
+.employee-info {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    column-gap: 8px;
+    height: 20px;
+}
