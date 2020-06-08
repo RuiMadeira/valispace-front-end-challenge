@@ -18,6 +18,14 @@ export class ManagePostService {
     return JSON.parse(localStorage.getItem(POST_LIST_KEY)) ?? [];
   }
 
+  public getPostListOrderByRecent(): Array<Post> {
+    return this.getPostList().sort((postA, postB) =>  {
+      const dateA = new Date(postA.edited ? postA.edited : postA.created);
+      const dateB = new Date(postB.edited ? postB.edited : postB.created);
+      return dateB.valueOf() - dateA.valueOf();
+    });
+  }
+
   public createPost(postCreated: Post): boolean {
     const id = this.getCurrentPostId() + 1;
     const currentPostList = this.getPostList();

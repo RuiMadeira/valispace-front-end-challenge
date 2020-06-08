@@ -27,7 +27,7 @@ export class PostsPageComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.postsList = this.managePostService.getPostList();
+    this.postsList = this.managePostService.getPostListOrderByRecent();
   }
 
   public createdPost(result: boolean): void {
@@ -41,7 +41,7 @@ export class PostsPageComponent implements OnInit {
   private postActionBehaviour(condition: boolean, messageSuccess: string, messageFailure: string): void {
     if (condition) {
       this.snackBar.open(messageSuccess, 'Close', { duration: 3000 });
-      this.postsList = this.managePostService.getPostList();
+      this.postsList = this.managePostService.getPostListOrderByRecent();
     } else {
       this.snackBar.open(messageFailure, 'Close', { duration: 3000 });
     }
