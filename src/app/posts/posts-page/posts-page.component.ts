@@ -3,7 +3,6 @@ import { Post } from 'src/app/models/post';
 import { ManageEmployeeService } from '../../services/manage-employee/manage-employee.service';
 import { ManagePostService } from '../../services/manage-post/manage-post.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { MentionConfig } from 'angular-mentions';
 
 const TEXT_PIECES: string[] = [
   'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
@@ -19,25 +18,6 @@ const TEXT_PIECES: string[] = [
 })
 export class PostsPageComponent implements OnInit {
   postsList: Array<Post> = [];
-  postSelected: Post;
-  mentionConfig: MentionConfig = {
-    mentions: [
-      {
-          items: [],
-          labelKey: 'username',
-          triggerChar: '@',
-          returnTrigger: true,
-          mentionSelect: this.mentionSelect,
-      },
-      {
-          items: [],
-          labelKey: 'phone',
-          triggerChar: '#',
-          returnTrigger: true,
-          mentionSelect: this.mentionSelect,
-      },
-    ],
-  };
 
   constructor(private managePostService: ManagePostService, private manageEmployeeService: ManageEmployeeService,
               private snackBar: MatSnackBar) {
@@ -50,67 +30,17 @@ export class PostsPageComponent implements OnInit {
     this.postsList = this.managePostService.getPostList();
   }
 
-  public getEmployeeUsernameFromId(id: number): string {
-    return this.manageEmployeeService.getEmployeeById(id)?.username ?? 'Unknown employee';
+  public createdPost(result: boolean): void {
+    this.postActionBehaviour(result, 'Post created successfully',  'Error creating post');
   }
 
-  public getMentionList(searchTerm: string) {
-    const triggerChar = searchTerm.charAt(0);
-    let items = [];
-    if (triggerChar === '@') {
-      items = this.manageEmployeeService.getEmployeesByUsername(searchTerm.substring(1));
-    } else if (triggerChar === '#') {
-      items = this.manageEmployeeService.getEmployeesByPhone(searchTerm.substring(1));
-    }
-    this.mentionConfig = {
-      ...this.mentionConfig,
-      mentions: this.mentionConfig.mentions.map(mention => mention.triggerChar === triggerChar ? { ...mention, items} : mention)
-    };
-  }
-
-  public selectPostForEdit(post: Post): void {
-    this.postSelected = { ...post };
-  }
-
-  public newPost(): void {
-    if (!this.postSelected) {
-    this.postSelected = { id: undefined, employeeId: undefined, text: undefined, created: undefined, edited: undefined };
-    }
-  }
-
-  public onBlurNewPost(): void {
-    if (this.postSelected && !this.postSelected.id && (!this.postSelected.text || this.postSelected.text === '')) {
-      this.postSelected = undefined;
-    }
-  }
-
-  public addPost(): void {
-    this.postActionBehaviour(this.managePostService.createPost(this.postSelected),
-      'Post created successfully',  'Error creating post');
-  }
-
-  public editSelectedPost(): void {
-    this.postActionBehaviour(this.managePostService.editPost(this.postSelected),
-      'Post edited successfully',  'Error editing post');
-  }
-
-  public cancelEditing(): void {
-    this.postSelected = undefined;
-  }
-
-  private mentionSelect(item: any, triggerChar: string): string {
-    if (triggerChar === '@') {
-      return `${triggerChar}{"id": ${item.id}, "field": "username"}`;
-    } else if (triggerChar === '#') {
-      return `${triggerChar}{"id": ${item.id}, "field": "phone"}`;
-    }
-    return '';
+  public editedPost(result: boolean): void {
+    this.postActionBehaviour(result, 'Post edited successfully',  'Error editing post');
   }
 
   private postActionBehaviour(condition: boolean, messageSuccess: string, messageFailure: string): void {
     if (condition) {
       this.snackBar.open(messageSuccess, 'Close', { duration: 3000 });
-      this.postSelected = undefined;
       this.postsList = this.managePostService.getPostList();
     } else {
       this.snackBar.open(messageFailure, 'Close', { duration: 3000 });

@@ -1,0 +1,19 @@
+.new-post-form {
+    width: 100%;
+}
+
+.new-post-form-field {
+    height: 100%;
+    width: 100%;
+}
+
+.edit-post-buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+}
+
+.post-card-dates {
+    display: flex;
+    flex-direction: column;
+}

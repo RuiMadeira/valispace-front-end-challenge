@@ -1,41 +1,5 @@
 <div class="posts-page">
+    <app-post [isNewPost]='true' (created)='this.createdPost($event)'></app-post>
 
-    <mat-card>
-        <mat-card-header>
-            <mat-card-title>Create new post</mat-card-title>
-        </mat-card-header>
-        <mat-card-content>
-            <form class="new-post-form">
-                <mat-form-field [floatLabel]="'never'" class="new-post-form-field">
-                    <textarea matInput cdkTextareaAutosize name="post" class="new-post" placeholder="Write a new post..."
-                    (focus)="this.newPost()" (blur)="this.onBlurNewPost()" [ngModel]="postSelected?.text" 
-                    (ngModelChange)="postSelected ? postSelected.text = $event : null"
-                    [mentionConfig]="mentionConfig" (searchTerm)="this.getMentionList($event)"></textarea>
-                </mat-form-field>
-            </form>
-        </mat-card-content>
-        <mat-card-actions>
-        <div class="edit-post-buttons" *ngIf="postSelected">
-            <button mat-raised-button (click)="this.addPost()">Preview</button>
-            <button mat-raised-button color="primary" [disabled]="!postSelected?.text" (click)="this.addPost()">Create</button>
-            <button mat-raised-button color="warn" (click)="this.cancelEditing()">Cancel</button>    
-        </div>
-        </mat-card-actions>
-    </mat-card>
-
-    <mat-card *ngFor="let post of postsList trackBy: this.trackById">
-        <mat-card-header>
-        <mat-card-title>{{this.getEmployeeUsernameFromId(post.employeeId)}}</mat-card-title>
-        <mat-card-subtitle>Created - {{post.created | date : 'yyyy-MM-dd'}}</mat-card-subtitle>
-        <mat-card-subtitle *ngIf="post.edited">Edited - {{post.edited | date : 'yyyy-MM-dd'}}</mat-card-subtitle>
-        </mat-card-header>
-        <mat-card-content>
-            <app-post-text [post]="post"></app-post-text>
-        </mat-card-content>
-        <mat-card-actions>
-            <div class="edit-post-buttons">
-                <button mat-raised-button class="manage-employee-button" (click)="this.selectPostForEdit()">Edit</button>
-            </div>
-        </mat-card-actions>
-    </mat-card>
+    <app-post *ngFor="let post of postsList trackBy: this.trackById" [isNewPost]='false' [post]=post (edited)='this.editedPost($event)'></app-post>
 </div>

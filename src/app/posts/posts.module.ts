@@ -10,9 +10,10 @@ import { FormsModule } from '@angular/forms';
 import { MatChipsModule } from '@angular/material/chips';
 import { PostTextComponent } from './post-text/post-text.component';
 import { SatPopoverModule } from '@ncstate/sat-popover';
+import { PostComponent } from './post/post.component';
 
 @NgModule({
-  declarations: [PostsPageComponent, PostTextComponent],
+  declarations: [PostsPageComponent, PostTextComponent, PostComponent],
   imports: [
     CommonModule,
     MatCardModule,
