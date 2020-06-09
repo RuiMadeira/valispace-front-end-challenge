@@ -23,5 +23,6 @@ describe('AdminPageComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+    fixture.destroy();
   });
 });

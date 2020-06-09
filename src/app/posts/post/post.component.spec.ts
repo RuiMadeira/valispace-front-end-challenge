@@ -21,5 +21,6 @@ describe('PostComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+    fixture.destroy();
   });
 });

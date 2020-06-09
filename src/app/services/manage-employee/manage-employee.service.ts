@@ -51,7 +51,7 @@ export class ManageEmployeeService {
   }
 
   public getEmployeesByUsername(searchTerm: string): Array<Employee> {
-    return this.getEmployeeList().filter(employee => employee.username.toLowerCase().startsWith(searchTerm));
+    return this.getEmployeeList().filter(employee => employee.username.toLowerCase().startsWith(searchTerm.toLowerCase()));
   }
 
   public getEmployeesByPhone(searchTerm: string): Array<Employee> {

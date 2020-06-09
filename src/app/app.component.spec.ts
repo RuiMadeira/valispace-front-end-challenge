@@ -18,12 +18,14 @@ describe('AppComponent', () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
     expect(app).toBeTruthy();
+    fixture.destroy();
   });
 
   it(`should have as title 'valispace-front-end-challenge'`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
     expect(app.title).toEqual('valispace-front-end-challenge');
+    fixture.destroy();
   });
 
   it('should render title', () => {
@@ -31,5 +33,6 @@ describe('AppComponent', () => {
     fixture.detectChanges();
     const compiled = fixture.nativeElement;
     expect(compiled.querySelector('.toolbar span').textContent).toContain('Valispace Front-End Challenge');
+    fixture.destroy();
   });
 });

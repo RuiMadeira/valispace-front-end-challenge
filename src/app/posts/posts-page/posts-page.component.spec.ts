@@ -23,5 +23,6 @@ describe('PostsPageComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+    fixture.destroy();
   });
 });
