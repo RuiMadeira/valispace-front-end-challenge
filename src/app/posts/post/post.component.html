@@ -36,13 +36,14 @@
     <mat-card-actions>
     <div class="edit-post-buttons" *ngIf="this.isEditing">
         <button mat-raised-button *ngIf="!this.isPreviewing" [disabled]="!post?.text" (click)="this.startPreviewing()">Preview</button>
-        <button mat-raised-button *ngIf="this.isPreviewing" class="manage-employee-button" (click)="this.startEditing()">Edit</button>
+        <button mat-raised-button *ngIf="this.isPreviewing" (click)="this.startEditing()">Edit</button>
         <button mat-raised-button color="primary" *ngIf="this.isNewPost" [disabled]="!post?.text" (click)="this.createPost()">Create</button>
         <button mat-raised-button color="primary" *ngIf="!this.isNewPost" [disabled]="!post?.text" (click)="this.editPost()">Confirm</button>
         <button mat-raised-button color="warn" (click)="this.cancelEditing()">Cancel</button>
     </div>
     <div class="edit-post-buttons" *ngIf="!this.isNewPost && !this.isEditing">
-        <button mat-raised-button class="manage-employee-button" (click)="this.startEditing()">Edit</button>
+        <button mat-raised-button (click)="this.startEditing()">Edit</button>
+        <button mat-raised-button color="warn" (click)="this.deletePost()">Delete</button>
     </div>
     </mat-card-actions>
 </mat-card>

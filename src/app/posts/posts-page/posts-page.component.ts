@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Post } from 'src/app/models/post';
+import { OperationResult } from 'src/app/models/operation-result';
 import { ManageEmployeeService } from '../../services/manage-employee/manage-employee.service';
 import { ManagePostService } from '../../services/manage-post/manage-post.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -30,20 +31,14 @@ export class PostsPageComponent implements OnInit {
     this.postsList = this.managePostService.getPostListOrderByRecent();
   }
 
-  public createdPost(result: boolean): void {
-    this.postActionBehaviour(result, 'Post created successfully',  'Error creating post');
+  public postsChanged(operationResult: OperationResult): void {
+    this.postActionBehaviour(operationResult.result, operationResult.message);
   }
 
-  public editedPost(result: boolean): void {
-    this.postActionBehaviour(result, 'Post edited successfully',  'Error editing post');
-  }
-
-  private postActionBehaviour(condition: boolean, messageSuccess: string, messageFailure: string): void {
+  private postActionBehaviour(condition: boolean, message: string): void {
+    this.snackBar.open(message, 'Close', { duration: 3000 });
     if (condition) {
-      this.snackBar.open(messageSuccess, 'Close', { duration: 3000 });
       this.postsList = this.managePostService.getPostListOrderByRecent();
-    } else {
-      this.snackBar.open(messageFailure, 'Close', { duration: 3000 });
     }
   }
 

@@ -1,5 +1,6 @@
 import { Component, OnInit, OnChanges, Input, Output, EventEmitter, SimpleChanges } from '@angular/core';
 import { Post } from 'src/app/models/post';
+import { OperationResult } from 'src/app/models/operation-result';
 import { ManageEmployeeService } from '../../services/manage-employee/manage-employee.service';
 import { ManagePostService } from '../../services/manage-post/manage-post.service';
 import { MentionConfig } from 'angular-mentions';
@@ -13,8 +14,7 @@ export class PostComponent implements OnInit, OnChanges {
   @Input() originalPost: Post;
   post: Post;
   @Input() isNewPost = false;
-  @Output() created = new EventEmitter<boolean>();
-  @Output() edited = new EventEmitter<boolean>();
+  @Output() postsChanged = new EventEmitter<OperationResult>();
   mentionConfig: MentionConfig = {
     mentions: [
       {
@@ -110,14 +110,26 @@ export class PostComponent implements OnInit, OnChanges {
   }
 
   public createPost(): void {
-    this.created.emit(this.managePostService.createPost(this.post));
+    const result = this.managePostService.createPost(this.post);
+    const message = result ? 'Post created successfully' : 'Error creating post';
+    this.postsChanged.emit({ result, message});
     this.post = undefined;
     this.isEditing = false;
     this.isPreviewing = false;
   }
 
   public editPost(): void {
-    this.edited.emit(this.managePostService.editPost(this.post));
+    const result = this.managePostService.editPost(this.post);
+    const message = result ? 'Post edited successfully' : 'Error editing post';
+    this.postsChanged.emit({ result, message});
+    this.isEditing = false;
+    this.isPreviewing = false;
+  }
+
+  public deletePost(): void {
+    const result = this.managePostService.deletePost(this.post);
+    const message = result ? 'Post deleted successfully' : 'Error deleting post';
+    this.postsChanged.emit({ result, message});
     this.isEditing = false;
     this.isPreviewing = false;
   }

@@ -40,4 +40,10 @@ export class ManagePostService {
     localStorage.setItem(POST_LIST_KEY, JSON.stringify(newPostList));
     return true;
   }
+
+  public deletePost(postDeleted: Post): boolean {
+    const newEmployeeList = this.getPostList().filter(post => post.id !== postDeleted.id);
+    localStorage.setItem(POST_LIST_KEY, JSON.stringify(newEmployeeList));
+    return true;
+  }
 }
