@@ -30,6 +30,9 @@ export class PostTextComponent {
   }
 
   public getListOfPostItems(postText: string): Array<PostItem> {
+    if (!postText){
+      return [];
+    }
     return postText.split(/([@#]{.+})/).map(item => this.isMention(item) ?
       { type: PostItemType.Mention, value: JSON.parse(item.substring(1)) as Mention } :
       { type: PostItemType.Text, value: item});

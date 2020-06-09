@@ -1,4 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 import { AdminPageComponent } from './admin-page.component';
 
@@ -8,7 +9,8 @@ describe('AdminPageComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AdminPageComponent ]
+      declarations: [ AdminPageComponent ],
+      imports: [ MatSnackBarModule ],
     })
     .compileComponents();
   }));

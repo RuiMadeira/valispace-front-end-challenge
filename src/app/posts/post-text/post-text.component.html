@@ -1,4 +1,4 @@
-<ng-container *ngFor="let item of this.getListOfPostItems(post.text) trackBy: this.trackByIndex">
+<ng-container *ngFor="let item of this.getListOfPostItems(post?.text) trackBy: this.trackByIndex">
     <ng-container [ngSwitch]="item.type">
         <ng-container *ngSwitchCase="PostItemType.Mention">
             <mat-chip [satPopoverAnchor]='popover' satPopoverAnchor (mouseenter)="popover.open()" (mouseleave)="popover.close()"

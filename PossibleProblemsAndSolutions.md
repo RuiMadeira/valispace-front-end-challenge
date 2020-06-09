@@ -30,3 +30,4 @@
 
 ## Tests
 - Tests should exist for every component, service, directive, etc. As well as a smaller set of E2E. In order to do this I would follow the standard Angular approach of Karma + Jasmine for Unit tests and Protractor + Jasmine for the E2E.
+- I would probably try to follow a more "immutable" structure for the tests, calling a setup function for each test instead of using beforeEach and let (like argued about in Angular docs).

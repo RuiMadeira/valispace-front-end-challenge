@@ -1,4 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 import { PostsPageComponent } from './posts-page.component';
 
@@ -8,7 +9,8 @@ describe('PostsPageComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ PostsPageComponent ]
+      declarations: [ PostsPageComponent ],
+      imports: [ MatSnackBarModule ],
     })
     .compileComponents();
   }));
