@@ -26,6 +26,7 @@
 - Employee id should not be generated on the front-end and should be the back-end handling it.
 
 ## Services and general architecture:
+- Depending on the requirements of the rest of the app, I would probably model the employees and posts differently by having them in a centralized app state store. Then we could fetch the lists by triggering certain state actions and the components would be "attached" to an observer, triggering a re-render when the observable changes. This could be achieved with simple rxjs or with the Redux like ngrx libraries.
 - Both services that manage data have a very similar contract and implementation. On a real app, depending on the back-end this would probably also be true. So in order to reduce "duplicated" code, we could have an hierarchy of services where for example the ones here would fall on CRUD services, or some other abstraction.
 
 ## Tests
