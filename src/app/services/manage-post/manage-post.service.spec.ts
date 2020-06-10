@@ -48,4 +48,10 @@ describe('ManagePostService', () => {
     service.deletePost(testPosts[0]);
     expect(service.getPostList()).toEqual([]);
   });
+
+  it('getPostListOrderByRecent should retrieve posts in descending using edited date, if available, or created otherwise', () => {
+    testPosts.forEach(post => service.createPost(post));
+    const idOfPostsByRecent = service.getPostListOrderByRecent().map(post => post.id);
+    expect(idOfPostsByRecent).toEqual([1, 3, 2, 4]);
+  });
 });
